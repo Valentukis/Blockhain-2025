@@ -1,11 +1,12 @@
 #include <iostream>
 #include <fstream>
+#include <bitset>
 using namespace std;
 
 int main() {
 
     int ivesties_tipas;
-    string ivestis, ivesties_failas;
+    string ivestis, ivesties_failas, ivestis_bin;
 
     cout << "Kaip norėsite įvesti tekstą? [0 - rankinis įvedimas, 1 - įvedimas iš failo]" << endl;
     cin >> ivesties_tipas;
@@ -23,9 +24,18 @@ int main() {
         input >> ivestis;
     }  
 
-    cout << ivestis;
 
+    for (char c: ivestis) {
+        bitset<8> bits(c);
+        ivestis_bin += bits.to_string();
 
+    }
+
+    cout << ivestis_bin;
 
 
 }
+
+
+
+
