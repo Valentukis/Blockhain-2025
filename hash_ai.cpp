@@ -60,8 +60,6 @@ void permute_state(std::array<uint64_t, 4>& state, const uint64_t block_words[8]
 
 // Pad message as: message || 0x80 || 0x00* || 128-bit big-endian bit-length
 std::vector<uint8_t> pad_message(const std::vector<uint8_t>& msg) {
-    uint128_t not_available_dummy = 0; // placeholder - we will do length in two uint64s
-    (void)not_available_dummy;
 
     uint64_t bit_len_low = static_cast<uint64_t>(msg.size()) * 8ULL;
     // For simplicity assume message length < 2^64 bits (practical for this assignment)
