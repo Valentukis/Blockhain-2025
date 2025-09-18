@@ -18,10 +18,10 @@ int main() {
     else if (ivesties_tipas == 1) {
         cout << "Iveskite failo pavadinimą formatu [pavadinimas.txt]: ";
         cin >> ivesties_failas;
-
+        
         ifstream input(ivesties_failas);
         input >> ivestis;
-    }
+    }  
 
     cout << ivestis;
 
