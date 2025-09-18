@@ -141,3 +141,49 @@ std::string custom_hash256(const std::string& input) {
 
     return to_hex256(state);
 }
+
+#include <string>
+#include <random>
+
+std::string random_string(size_t length) {
+    static const char charset[] =
+        "abcdefghijklmnopqrstuvwxyz"
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "0123456789"
+        "!@#$%^&*()-_=+[]{}|;:,.<>?";
+    static std::mt19937 rng(std::random_device{}());
+    static std::uniform_int_distribution<> dist(0, sizeof(charset) - 2);
+
+    std::string s(length, ' ');
+    for (size_t i = 0; i < length; ++i) {
+        s[i] = charset[dist(rng)];
+    }
+    return s;
+}
+
+void test_collisions(size_t string_length, size_t pairs) {
+    size_t collision_count = 0;
+
+    std::unordered_set<std::string> seen_hashes;
+
+    for (size_t i = 0; i < pairs; ++i) {
+        std::string a = random_string(string_length);
+        std::string b = random_string(string_length);
+
+        std::string hash_a = custom_hash256(a);
+        std::string hash_b = custom_hash256(b);
+
+        if (hash_a == hash_b) {
+            ++collision_count;
+            std::cout << "Collision found!\n";
+        }
+
+        // optional: store hashes to detect duplicates in the whole set
+        seen_hashes.insert(hash_a);
+        seen_hashes.insert(hash_b);
+    }
+
+    std::cout << "String length: " << string_length
+        << ", collisions in " << pairs << " pairs: "
+        << collision_count << "\n";
+}
