@@ -1,14 +1,6 @@
-// custom_hash256.cpp
-// Educational custom 256-bit hash (NOT for production)
+﻿
+#include "hash_ai.hpp"
 
-#include <array>
-#include <cstdint>
-#include <cstring>
-#include <iomanip>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <vector>
 
 // rotate left for uint64_t
 static inline uint64_t rotl64(uint64_t x, unsigned r) {
@@ -148,19 +140,4 @@ std::string custom_hash256(const std::string& input) {
     permute_state(state, zero_block);
 
     return to_hex256(state);
-}
-
-// Simple test harness when run as program
-int main(int argc, char** argv) {
-    if (argc == 1) {
-        std::string demo = "hello";
-        std::cout << "hash(\"" << demo << "\") = " << custom_hash256(demo) << "\n";
-        std::cout << "Provide an argument to hash (or pipe input).\n";
-        return 0;
-    }
-
-    // hash argv[1]
-    std::string s = argv[1];
-    std::cout << custom_hash256(s) << "\n";
-    return 0;
 }
