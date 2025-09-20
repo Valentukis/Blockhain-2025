@@ -7,9 +7,7 @@
 #include <limits>
 #include <iomanip>
 using namespace std;
-// 0x055D3F9EC866DB6C
-// 0x054C33BBC571D86D
-// 0x604016D6C571D86D
+
 int main() {
     int ivesties_tipas;
     string ivestis, ivesties_failas;
@@ -57,8 +55,12 @@ int main() {
         hash[pos] = hash[pos] ^ byte[b];
         }
     }
-
+    
     uint64_t h = hash.to_ullong();
+    h *= 0xFEEDFACECAFEBEEFull; //paskutinis pramaisymas
+    h ^= (h >> 29); 
+    h *= 0x9E3779B97F4A7C15ull;
+
     cout  << "Hash (64-bit): 0x" << setw(16) << setfill('0') << hex << h << endl;
 
 }
