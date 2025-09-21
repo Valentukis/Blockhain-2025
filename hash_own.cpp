@@ -8,35 +8,10 @@
 #include <iomanip>
 using namespace std;
 
-int main() {
-    int ivesties_tipas;
-    string ivestis = "", ivesties_failas, line;
+
+uint64_t hash_own(string ivestis) {
+    uint64_t seed = 371928463890165017ull;
     vector<bitset<8>> separate_bytes;
-    uint64_t seed = 371928463890165017ull; 
-
-    cout << "Kaip norėsite įvesti tekstą? [0 - rankinis įvedimas, 1 - įvedimas iš failo]" << endl;
-    cin >> ivesties_tipas;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    if (ivesties_tipas == 0) {
-        cout << "Iveskite hash'uojamą string'ą: " << endl;
-        getline(cin, ivestis);
-    }
-
-    else if (ivesties_tipas == 1) {
-        cout << "Iveskite failo pavadinimą formatu [pavadinimas.txt]: " << endl;
-        getline(cin, ivesties_failas);
-
-        ifstream input(ivesties_failas);
-        while (getline(input,line)) {
-            ivestis += line + '\n';
-        }
-    }
-     
-    else {
-        cout << "Neteisingas pasirinkimas.\n";
-        return 0;
-    }
 
     for (unsigned char c : ivestis) { 
         separate_bytes.push_back(bitset<8>(c));
@@ -63,6 +38,34 @@ int main() {
     h *= 0xFEEDFACECAFEBEEFull; //paskutinis pramaisymas
     h ^= (h >> 29); 
     h *= 0x9E3779B97F4A7C15ull;
+
+    return h;
+}
+
+int main() {
+    int ivesties_tipas;
+    string ivestis = "", ivesties_failas, line;
+
+    cout << "Kaip norėsite įvesti tekstą? [0 - rankinis įvedimas, 1 - įvedimas iš failo]" << endl;
+    cin >> ivesties_tipas;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    if (ivesties_tipas == 0) {
+        cout << "Iveskite hash'uojamą string'ą: " << endl;
+        getline(cin, ivestis);
+    }
+
+    else if (ivesties_tipas == 1) {
+        cout << "Iveskite failo pavadinimą formatu [pavadinimas.txt]: " << endl;
+        getline(cin, ivesties_failas);
+
+        ifstream input(ivesties_failas);
+        while (getline(input,line)) {
+            ivestis += line + '\n';
+        }
+    }
+     
+    uint64_t h = hash_own(ivestis);
 
     cout  << "Hash (64-bit): 0x" << setw(16) << setfill('0') << hex << h << endl;
 
