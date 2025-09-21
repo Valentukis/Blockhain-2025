@@ -10,7 +10,7 @@ using namespace std;
 
 int main() {
     int ivesties_tipas;
-    string ivestis, ivesties_failas;
+    string ivestis = "", ivesties_failas, line;
     vector<bitset<8>> separate_bytes;
     uint64_t seed = 371928463890165017ull; 
 
@@ -26,8 +26,11 @@ int main() {
     else if (ivesties_tipas == 1) {
         cout << "Iveskite failo pavadinimą formatu [pavadinimas.txt]: " << endl;
         getline(cin, ivesties_failas);
+
         ifstream input(ivesties_failas);
-        getline(input, ivestis);
+        while (getline(input,line)) {
+            ivestis += line + '\n';
+        }
     }
      
     else {
