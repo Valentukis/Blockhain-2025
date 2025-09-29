@@ -187,3 +187,77 @@ void test_collisions(size_t string_length, size_t pairs) {
         << ", collisions in " << pairs << " pairs: "
         << collision_count << "\n";
 }
+
+#include <bitset>
+#include <cmath>
+
+static size_t hex_diff_count(const std::string& h1, const std::string& h2) {
+    size_t diff = 0;
+    for (size_t i = 0; i < h1.size() && i < h2.size(); ++i) {
+        if (h1[i] != h2[i]) diff++;
+    }
+    return diff;
+}
+
+static size_t bit_diff_count(const std::string& h1, const std::string& h2) {
+    size_t diff = 0;
+    // each hex char = 4 bits
+    for (size_t i = 0; i < h1.size() && i < h2.size(); ++i) {
+        uint8_t nib1 = std::stoi(h1.substr(i, 1), nullptr, 16);
+        uint8_t nib2 = std::stoi(h2.substr(i, 1), nullptr, 16);
+        diff += std::bitset<4>(nib1 ^ nib2).count();
+    }
+    return diff;
+}
+
+void test_avalanche(size_t string_len, size_t pairs) {
+    std::mt19937 rng(std::random_device{}());
+    std::uniform_int_distribution<> pos_dist(0, string_len - 1);
+    std::uniform_int_distribution<> char_dist(32, 126); // printable ASCII
+
+    size_t total_bit_diff = 0, min_bit = SIZE_MAX, max_bit = 0;
+    size_t total_hex_diff = 0, min_hex = SIZE_MAX, max_hex = 0;
+    const size_t hash_bits = 256;
+    const size_t hash_hex = 64;
+
+    for (size_t i = 0; i < pairs; ++i) {
+        // random base string
+        std::string s(string_len, ' ');
+        for (size_t j = 0; j < string_len; ++j)
+            s[j] = static_cast<char>(char_dist(rng));
+
+        // create a copy and change ONE character
+        std::string t = s;
+        size_t pos = pos_dist(rng);
+        char new_ch;
+        do {
+            new_ch = static_cast<char>(char_dist(rng));
+        } while (new_ch == s[pos]);
+        t[pos] = new_ch;
+
+        // hash both
+        std::string h1 = custom_hash256(s);
+        std::string h2 = custom_hash256(t);
+
+        size_t bit_d = bit_diff_count(h1, h2);
+        size_t hex_d = hex_diff_count(h1, h2);
+
+        total_bit_diff += bit_d;
+        total_hex_diff += hex_d;
+        min_bit = std::min(min_bit, bit_d);
+        max_bit = std::max(max_bit, bit_d);
+        min_hex = std::min(min_hex, hex_d);
+        max_hex = std::max(max_hex, hex_d);
+    }
+
+    double avg_bit = static_cast<double>(total_bit_diff) / pairs;
+    double avg_hex = static_cast<double>(total_hex_diff) / pairs;
+
+    std::cout << "Avalanche test (" << pairs << " pairs, length " << string_len << "):\n";
+    std::cout << "Bit difference:    avg " << avg_bit
+        << " / " << hash_bits << " (" << (avg_bit * 100.0 / hash_bits) << "%)\n";
+    std::cout << "   min " << min_bit << "  max " << max_bit << "\n";
+    std::cout << "Hex difference:    avg " << avg_hex
+        << " / " << hash_hex << " (" << (avg_hex * 100.0 / hash_hex) << "%)\n";
+    std::cout << "   min " << min_hex << "  max " << max_hex << "\n";
+}

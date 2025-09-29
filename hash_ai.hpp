@@ -17,5 +17,6 @@
 std::string custom_hash256(const std::string& input);
 std::string random_string(size_t length);
 void test_collisions(size_t string_length, size_t pairs = 100000);
+void test_avalanche(size_t string_len = 100, size_t pairs = 100000);
 
 #endif
