@@ -141,12 +141,15 @@ Buvo atlikti eskperimentiniai tyrimai pagal duotus reikalavimus.
 Sugeneruota po **100 000 atsitiktinių string porų**, skirtingo ilgio (10, 100, 500, 1000 simbolių).  
 Patikrinta, kiek jų hash’ai sutapo.
 
+**PASTABA:** Visos lentelės gaunasi vienodos, nes nepavyko rasti kolizijų nė vienoje Hash funkcijoje!
+
+### Nuosavo / Nuosavo patobulinto / AI / SHA256 / Adomo individalaus Hash'u kolizijų paieška
 | String ilgis | Kolizijų skaičius | Kolizijų dažnumas (proc) |
 |--------------|-------------------|--------------------------|
-| 10           | ...               |  %                       |
-| 100          | ...               |  %                       |
-| 500          | ...               |  %                       |
-| 1000         | ...               |  %                       | 
+| 10           | 0               |  0 %                       |
+| 100          | 0               |  0 %                       |
+| 500          | 0               |  0 %                       |
+| 1000         | 0               |  0 %                       | 
 
 ---
 
