@@ -289,7 +289,7 @@ Trumpas santraukinis palyginimas pagrindinėms savybėms ir eksperimentiniams re
 
 ---
 
-## 6. Išvados
+## 7. Išvados
 
 ***Valentino hash'as***
 
