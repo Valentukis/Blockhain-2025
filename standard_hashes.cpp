@@ -230,7 +230,7 @@ void test_collisions(HashFunc hash_func, const std::string& name, size_t string_
 }
 /// Konstitucijos testas
 template<typename HashFunc>
-void benchmark_file(HashFunc hash_func, const std::string& name, const std::string& filename) {
+void benchmark_file(HashFunc hash_func, const std::string& name, const std::string& filename, int repeats = 5) {
     std::ifstream fin(filename);
     if (!fin) {
         std::cerr << "Cannot open file: " << filename << "\n";
@@ -240,12 +240,12 @@ void benchmark_file(HashFunc hash_func, const std::string& name, const std::stri
     std::vector<std::string> lines;
     std::string line;
     while (std::getline(fin, line)) {
-        lines.push_back(line + "\n"); // keep newlines
+        lines.push_back(line + "\n"); 
     }
 
     std::cout << "\nBenchmarking " << name << " on file: " << filename << "\n";
     std::cout << "Total lines: " << lines.size() << "\n";
-    std::cout << "Lines\tBytes\tTime(ms)\n";
+    std::cout << "Lines\tBytes\tAvgTime(ms)\n";
 
     size_t step = 1;
     while (step <= lines.size()) {
@@ -253,12 +253,17 @@ void benchmark_file(HashFunc hash_func, const std::string& name, const std::stri
         for (size_t i = 0; i < step; ++i) buffer << lines[i];
         std::string text = buffer.str();
 
-        auto start = std::chrono::high_resolution_clock::now();
-        hash_func(text);
-        auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double, std::milli> ms = end - start;
+        double total_ms = 0.0;
+        for (int r = 0; r < repeats; ++r) {
+            auto start = std::chrono::high_resolution_clock::now();
+            hash_func(text);
+            auto end = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double, std::milli> ms = end - start;
+            total_ms += ms.count();
+        }
+        double avg_ms = total_ms / repeats;
 
-        std::cout << step << "\t" << text.size() << "\t" << ms.count() << "\n";
+        std::cout << step << "\t" << text.size() << "\t" << avg_ms << "\n";
 
         step *= 2;
     }
@@ -345,7 +350,7 @@ int main(int argc, char** argv) {
 
     std::cout << "--- Avalanche Test ---\n";
     for (auto& h : hashes) {
-        test_avalanche(h.second, h.first, 64, 10000);
+        test_avalanche(h.second, h.first, 64, 100000);
     }
 
     std::cout << "--- Collision Test ---\n";
