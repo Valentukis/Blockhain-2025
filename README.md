@@ -268,10 +268,13 @@ Pademonstruota, kad neįmanoma atkurti pradinio input vien iš hash’o visuose 
 
 ***Andriaus hash'as***
 
-- **Stiprybės**:
+**Stiprybės**:
+                     
 - Stiprūs avalanche-effect rezultatai - beveik SHA lygio.
 - Didelis output dydis - 256 bitai, sunku brute-forcinti.
 - Rotacijų ir daugybos naudojimas – keli konstantų, rotacijų ir fmix64 veiksmų sluoksniai pagerina difuziją.
-- **Trūkumai**:
+
+**Trūkumai**:
+  
 - Lėtesnis nei mažesni hash'ai
 - Sudėtingesnė realizacija – reikia paddingo, kelių būsenos dalių ir permutacijų, todėl implementacija sudėtingesnė nei paprastų hash’ų.
