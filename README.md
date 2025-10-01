@@ -259,6 +259,24 @@ Pademonstruota, kad neįmanoma atkurti pradinio input vien iš hash’o visuose 
 
 ---
 
+## 6. Palyginimas: Valentino v1.0 (originalas) vs Valentino v2.0 (patobulinta su DI)
+
+Trumpas santraukinis palyginimas pagrindinėms savybėms ir eksperimentiniams rezultatams.
+
+| Savybė             | Valentino v1.0 (original)                 | Valentino v2.0 (patobulinta)                    | Komentaras / reikšmė |
+|------------------------------|-------------------------------------------|--------------------------------------------------|----------------------|
+| Išvesties dydis              | 64 bitai                                  | 256 bitų                                         | v2 turi žymiai didesnį output — saugesnis prieš brute-force. |
+| Deterministiškumas          | Taip                                      | Taip                                             | Abi versijos deterministinės. |
+| Vidutinis laikas per visus testus [ms]      | **0.1238 ms**     | **0.0243 ms**             | v2 ≈ **80 %** greitesnė pagal pateiktus vidurkius (mažesnis vid. laikas). |
+| Efektyvumo skalavimas       | Laikas auga greitai su didesniu įvedimu   | Laikas auga lėčiau            | Matosi iš eilučių skaičiaus lentelių (v2 stabiliau mažesnis). |
+| Kolizijų paieška     | 0 / 100000 (visiems ilgiams)             | 0 / 100000 (visiems ilgiams)                    | Nėra aptiktų kolizijų abiem. |
+| Lavinos efektas (bitų vid)  | ~30.26 %                                  | ~38.88 %                                        | v2 rodo geresnį bitų difuzijos vidurkį, taigi, geresnis lavinos efektas. |
+| Lavinos efektas (hex vid)   | ~85.75 %                                  | ~93.73 %                                        | v2 stipresnis ir hex-lygyje (daugiau skirtingų heks-baitų). |
+| Negrįžtamumas | Taip           | Taip        | v2 yra praktiškai sunkiau „invertuoti“ dėl 256 bitų output. |
+
+
+---
+
 ## 6. Išvados
 
 ***Valentino hash'as***
