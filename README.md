@@ -246,13 +246,16 @@ Skirtumai matuoti **bitų** ir **hex** lygmeniu.
 
 ## 5. Negrįžtamumo demonstracija
 
-Metodas: `prideti`  
-Pademonstruota, kad neįmanoma atkurti pradinio input vien iš hash’o.
+Metodas: parodyti, kad hash'as turi kiekvieną savybę, kad funkcija atitiktų puzzle friendliness, negrįžtamumo reikalavimus (Deterministiškumas, lavinos efektas, t.t.)
+Pademonstruota, kad neįmanoma atkurti pradinio input vien iš hash’o visuose variantuose.
 
-| Įvestis | Naudotas salt | Hash rezultatas | Ar įmanoma atkurti input? |
-|-----------------|---------------|-----------------|---------------------------|
-| "test"          | abc123        | …               | Ne                        |
-| "slaptas"       | xyz789        | …               | Ne                        |
+ Funkcija              | Deterministiškumas | "Hiding" | Lavinos efektas| Negrįžtamumas |
+|-----------------------|---------------|--------------------------|---------------------------|--------------|
+| Valentino             | Taip          | Taip                     | Taip                      | Taip         |
+| Valentino patobulintas| Taip          | Taip                     | Taip                      | Taip         |
+| Andriaus AI           | Taip          | Taip                     | Taip                      | Taip         |
+| SHA-1                 | Taip          | Taip                     | Taip                      | Taip         |
+| SHA-256               | Taip          | Taip                     | Taip                      | Taip         |
 
 ---
 
