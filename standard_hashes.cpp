@@ -273,6 +273,56 @@ double measure_speed(HashFunc hash_func, const std::string& input) {
     return std::chrono::duration<double, std::milli>(end - start).count();
 }
 
+// negriztamumo testas
+// Improved Hiding / Irreversibility Test
+template<typename HashFunc>
+void test_hiding(HashFunc hash_func, const std::string& name) {
+    std::string input = "secret_password";
+    std::string salt1 = "salt_one";
+    std::string salt2 = "salt_two";
+
+    std::cout << "[Hiding Test] " << name << "\n";
+
+    // 1. Determinism
+    std::string h1 = hash_func(input + salt1);
+    std::string h2 = hash_func(input + salt1);
+    std::cout << "Determinism:\n"
+              << "  Hash1: " << h1 << "\n"
+              << "  Hash2: " << h2 << "\n";
+
+    // 2. Hiding (different salts)
+    std::string h3 = hash_func(input + salt2);
+    std::cout << "Hiding (different salts):\n"
+              << "  Input+salt1: " << h1 << "\n"
+              << "  Input+salt2: " << h3 << "\n";
+
+    // 3. Avalanche inside hiding (small input change)
+    std::string input2 = "secret_passw0rd"; // one char changed
+    std::string h4 = hash_func(input2 + salt1);
+    std::cout << "Avalanche (small input change):\n"
+              << "  Original: " << h1 << "\n"
+              << "  Modified: " << h4 << "\n";
+
+    // 4. Optional brute-force attempt
+    std::vector<std::string> guesses = {"1234", "password", "hello"};
+    bool recovered = false;
+    for (const auto& g : guesses) {
+        if (hash_func(g + salt1) == h1) {
+            std::cout << "Recovered input guess: " << g << "\n";
+            recovered = true;
+            break;
+        }
+    }
+    if (!recovered) {
+        std::cout << "Brute-force test: None of the guesses matched. Irreversible.\n";
+    }
+
+    std::cout << "\n";
+}
+
+
+
+
 int main(int argc, char** argv) {
     using HashFunc = std::string(*)(const std::string&);
     std::vector<std::pair<std::string, HashFunc>> hashes = {
@@ -306,6 +356,12 @@ int main(int argc, char** argv) {
             test_collisions(h.second, h.first, len, 100000);
         }
     }
+
+    std::cout << "--- Hiding / Irreversibility Test ---\n";
+    for (auto& h : hashes) {
+        test_hiding(h.second, h.first);
+    }
+
 
     if (argc == 2) {
         std::string filename = argv[1];
