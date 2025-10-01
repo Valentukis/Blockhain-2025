@@ -263,8 +263,15 @@ Pademonstruota, kad neįmanoma atkurti pradinio input vien iš hash’o visuose 
 
 ***Valentino hash'as***
 
-- **Stiprybės**: 
-- **Trūkumai**: prideti
+**Stiprybės**:
+
+- Paprastas ir lengvas – lengvai įgyvendinamas ir labai greitai veikia, nes naudoja tik baitų rotacijas ir XOR.
+- Seed priklausomybė, dėl kurios pradinė konstanta ir rotacijos užtikrina šiokį tokį unikalumą.
+
+**Trūkumai**:
+
+- Silpnas lavinos efektas – testuose gauta tik apie ~30% bitų pokyčių (vietoj idealių ~50%), todėl įvesties pakeitimai nevisiškai pasklinda.
+- Mažas išvesties dydis – 64 bitų hash'as yra mažas ir lengvai pažeidžiamas brute-force atakų.
 
 ***Andriaus hash'as***
 
