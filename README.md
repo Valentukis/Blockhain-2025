@@ -191,7 +191,7 @@ Buvo atlikti eskperimentiniai tyrimai pagal duotus reikalavimus.
 | 512              | 	2.1761  |
 
 ### Grafikas
-čia įterpti grafiką*
+![alt text](image.png)
 
 ---
 
