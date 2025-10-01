@@ -215,22 +215,34 @@ Patikrinta, kiek jų hash’ai sutapo.
 
 ## 4. Lavinos efektas
 
-Sugeneruota **100 000 porų**, kurios skiriasi tik vienu simboliu.  
+Sugeneruota **100 000 porų**, kurios skiriasi tik vienu simboliu, 64 bitų ilgio.
 Skirtumai matuoti **bitų** ir **hex** lygmeniu.
 
 ### Bitų lygmuo
 
-| Min skirtumas (%) | Max skirtumas (%) | Vidutinis (%) |
-|-------------------|-------------------|---------------|
-| …                 | …                 | …             |
+| Hash'as                  | Min skirtumas (%) | Max skirtumas (%) | Vidutinis (%) |
+|---------------------------|-----------------|-----------------|---------------|
+| Custom                    | 119             | 217             | 33.01         |
+| Valentino                 | 9               | 65              | 30.26         |
+| Valentino patobulintas    | 139             | 256             | 38.88         |
+| MD5                       | 52              | 125             | 33.01         |
+| SHA-1                     | 61              | 142             | 33.01         |
+| SHA-256                   | 116             | 215             | 33.01         |
+| Adomo PHA256              | 36              | 63              | 49.82            |
+
 
 ### Hex lygmuo
 
-| Min skirtumas (%) | Max skirtumas (%) | Vidutinis (%) |
-|-------------------|-------------------|---------------|
-| …                 | …                 | …             |
+| Hash'as                  | Min skirtumas (%) | Max skirtumas (%) | Vidutinis (%) |
+|---------------------------|-----------------|-----------------|---------------|
+| Custom                    | 49              | 64              | 93.74         |
+| Valentino                 | 5               | 16              | 85.75         |
+| Valentino patobulintas    | 48              | 64              | 93.73         |
+| MD5                       | 22              | 32              | 93.74         |
+| SHA-1                     | 28              | 40              | 93.75         |
+| SHA-256                   | 51              | 64              | 93.76         |
+| Adomo PHA256              | 75              | 100              | 93.50            |
 
----
 
 ## 5. Negrįžtamumo demonstracija
 
