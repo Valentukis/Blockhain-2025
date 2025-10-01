@@ -258,9 +258,17 @@ Pademonstruota, kad neįmanoma atkurti pradinio input vien iš hash’o.
 
 ## 6. Išvados
 
-- **Stiprybės**: prideti
+***Valentino hash'as***
+
+- **Stiprybės**: 
 - **Trūkumai**: prideti
 
-# Eksperimentinis tyrimas: nuosavo hash'o patobulinimas
-pasigalvoti dar ar norime visas lenteles taip pat pildyti ar sugalvoti kitokia struktura hashu palyginimui
+***Andriaus hash'as***
 
+- **Stiprybės**:
+- Stiprūs avalanche-effect rezultatai - beveik SHA lygio.
+- Didelis output dydis - 256 bitai, sunku brute-forcinti.
+- Rotacijų ir daugybos naudojimas – keli konstantų, rotacijų ir fmix64 veiksmų sluoksniai pagerina difuziją.
+- **Trūkumai**:
+- Lėtesnis nei mažesni hash'ai
+- Sudėtingesnė realizacija – reikia paddingo, kelių būsenos dalių ir permutacijų, todėl implementacija sudėtingesnė nei paprastų hash’ų.
