@@ -41,6 +41,70 @@ Pagrindinę idėją galima aprašyti šitaip:
     h = h * constant_4
 
     return h
+    
+##  AI Versijos Pseudo-kodas
+function custom_hash256(input_string):
+    
+    # --- Constants / IVs ---
+    IV0 = 0x0123456789ABCDEF
+    IV1 = 0xFEDCBA9876543210
+    IV2 = 0xF0E1D2C3B4A59687
+    IV3 = 0x89ABCDEF01234567
+    state = [IV0, IV1, IV2, IV3]
+
+    # --- Helper functions ---
+    function rotl64(x, r):
+        return (x << r) | (x >> (64 - r))
+
+    function fmix64(k):
+        k ^= k >> 33
+        k *= 0xff51afd7ed558ccdl
+        k ^= k >> 33
+        k *= 0xc4ceb9fe1a85ec53
+        k ^= k >> 33
+        return k
+
+    function permute(state, block_words):
+        # simple 4-word mixing inspired by your C++ code
+        for i = 0 to 3:
+            state[i] = state[i] ^ block_words[i]
+        
+        a, b, c, d = state[0], state[1], state[2], state[3]
+
+        # apply rotations, XORs, additions
+        a ^= b >> 1;  b ^= c >> 3;  c ^= d >> 5;  d ^= a >> 7
+        a += d; b += a; c += b; d += c
+
+        # final fmix
+        state[0] = fmix64(a ^ (b + c + d))
+        state[1] = fmix64(b ^ (a + c + d))
+        state[2] = fmix64(c ^ (a + b + d))
+        state[3] = fmix64(d ^ (a + b + c))
+
+        return state
+
+    # --- Padding ---
+    msg = to_bytes(input_string)
+    msg = msg || 0x80   # append 0x80
+    while (len(msg) + 16) % 64 != 0:
+        msg = msg || 0x00
+    msg = msg || encode_128bit_length(len(input_string))
+
+    # --- Process blocks ---
+    for each 64-byte block B in msg:
+        words = split B into 4 × 64-bit integers
+        state = permute(state, words)
+
+    # --- Finalization ---
+    zero_block = [0, 0, 0, 0]
+    for i = 0 to 3:
+        state[i] = state[i] XOR (0x0123456789ABCDEF XOR state[(i+1) mod 4])
+    state = permute(state, zero_block)
+    state = permute(state, zero_block)
+
+    # --- Output ---
+    return hex(state[0]) || hex(state[1]) || hex(state[2]) || hex(state[3])
+
 
 # Eksperimentinis tyrimas: nuosavas hash'as (be patobulinimo)
 Buvo atlikti eskperimentiniai tyrimai pagal duotus reikalavimus. 
