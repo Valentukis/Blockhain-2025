@@ -270,7 +270,7 @@ Pademonstruota, kad neįmanoma atkurti pradinio input vien iš hash’o visuose 
 
 **Trūkumai**:
 
-- Silpnas lavinos efektas – testuose gauta tik apie ~30% bitų pokyčių (vietoj idealių ~50%), todėl įvesties pakeitimai nevisiškai pasklinda.
+- Silpnas lavinos efektas – testuose gauta tik apie ~30% bitų pokyčių (vietoj kitų 33%), todėl įvesties pakeitimai nevisiškai pasklinda.
 - Mažas išvesties dydis – 64 bitų hash'as yra mažas ir lengvai pažeidžiamas brute-force atakų.
 
 ***Andriaus hash'as***
