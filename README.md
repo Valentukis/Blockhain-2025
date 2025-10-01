@@ -42,7 +42,7 @@ Pagrindinę idėją galima aprašyti šitaip:
 
     return h
 
-# Eksperimentinis tyrimas
+# Eksperimentinis tyrimas: nuosavas hash'as (be patobulinimo)
 Buvo atlikti eskperimentiniai tyrimai pagal duotus reikalavimus. 
 
 ## 1. Hash funkcijos savybės
@@ -121,4 +121,7 @@ Pademonstruota, kad neįmanoma atkurti pradinio input vien iš hash’o.
 
 - **Stiprybės**: prideti
 - **Trūkumai**: prideti
+
+# Eksperimentinis tyrimas: nuosavo hash'o patobulinimas
+pasigalvoti dar ar norime visas lenteles taip pat pildyti ar sugalvoti kitokia struktura hashu palyginimui
 
