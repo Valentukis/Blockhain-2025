@@ -1,8 +1,19 @@
-# Nuosavo hash'o idėja
+# Savo sugalvotas hash'as
 
-Buvo atlikta pradinė versija v1.0 visiškai be AI įrankių, pasinaudojus jais padaryta maksimaliai patobulinta versija, naudojanti tą pačią pagrindinę idėją
+
+Buvo atlikta pradinė versija v1.0 visiškai be DI įrankių, pasinaudojus jais padaryta maksimaliai patobulinta versija v2.0, išlaikant tą pačią unikalią idėją
 
 ---
+
+## Idėja (sugalvota be DI)
+Pagrindinę idėją galima aprašyti šitaip:  
+1. Paimti 3-4 dideles konstantas, kurios padės išmaišime. Pačia pirmą priskiriame kaip seed'ą
+2. Paimame iš vartotojo įvestį
+3. Padalijame į byte'us
+4. Persukame byte'us per k (k gauname per kintantį input'o ilgį ir konstantą ), k != 0
+5. Gaminame hash'ą - paimame pradinį seed'ą, ir kiekvieną jo bit'ą lyginame su atitinkamu pramaišyto input'o bitu taikant XOR 
+6. Gautą hash'ą d dar padauginame porą kartu iš konstantų ir perslenkam per kažkiek vienetų (pasirinkta 29, bet nebūtinai tiek)
+7. Grąžiname 64bit hash'ą!
 
 ##  Pseudo-kodas
     function hash_own(input_string):
@@ -32,5 +43,82 @@ Buvo atlikta pradinė versija v1.0 visiškai be AI įrankių, pasinaudojus jais 
     return h
 
 # Eksperimentinis tyrimas
+Buvo atlikti eskperimentiniai tyrimai pagal duotus reikalavimus. 
 
+## 1. Hash funkcijos savybės
+
+| Savybė                     | Rezultatas (Taip/Ne) |
+|-----------------------------|-------------|
+| Išvedimo dydis fiksuotas    | Taip / Ne   |
+| Deterministiškumas          | Taip / Ne   |
+
+---
+
+## 2. Efektyvumas (konstitucija.txt)
+
+| Eilučių skaičius | Vidutinis laikas (ms) |
+|------------------|------------------------|
+| 1                | … |
+| 2                | … |
+| 4                | … |
+| 8                | … |
+| ...              | … |
+| 512              | … |
+
+
+### Grafikas
+čia įterpti grafiką*
+
+---
+
+
+## 3. Kolizijų paieška
+
+Sugeneruota po **100 000 atsitiktinių string porų**, skirtingo ilgio (10, 100, 500, 1000 simbolių).  
+Patikrinta, kiek jų hash’ai sutapo.
+
+| String ilgis | Kolizijų skaičius | Kolizijų dažnumas (proc) |
+|--------------|-------------------|--------------------------|
+| 10           | ...               |  %                       |
+| 100          | ...               |  %                       |
+| 500          | ...               |  %                       |
+| 1000         | ...               |  %                       | 
+
+---
+
+## 4. Lavinos efektas
+
+Sugeneruota **100 000 porų**, kurios skiriasi tik vienu simboliu.  
+Skirtumai matuoti **bitų** ir **hex** lygmeniu.
+
+### Bitų lygmuo
+
+| Min skirtumas (%) | Max skirtumas (%) | Vidutinis (%) |
+|-------------------|-------------------|---------------|
+| …                 | …                 | …             |
+
+### Hex lygmuo
+
+| Min skirtumas (%) | Max skirtumas (%) | Vidutinis (%) |
+|-------------------|-------------------|---------------|
+| …                 | …                 | …             |
+
+---
+
+## 5. Negrįžtamumo demonstracija
+
+Metodas: `prideti`  
+Pademonstruota, kad neįmanoma atkurti pradinio input vien iš hash’o.
+
+| Įvestis | Naudotas salt | Hash rezultatas | Ar įmanoma atkurti input? |
+|-----------------|---------------|-----------------|---------------------------|
+| "test"          | abc123        | …               | Ne                        |
+| "slaptas"       | xyz789        | …               | Ne                        |
+
+---
+
+## 6. Išvados
+
+- **Stiprybės**: prideti
+- **Trūkumai**: prideti
 
