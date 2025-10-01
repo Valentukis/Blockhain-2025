@@ -42,6 +42,18 @@ Pagrindinę idėją galima aprašyti šitaip:
 
     return h
     
+
+## Idėja (hashui su DI)
+
+1. Paimti 4 dideles konstantas (IV – inicializacijos vektorius), kurios tampa pradiniu būsenos masyvu.
+2. Įvestį iš vartotojo paversti į baitus.
+3. Atlikti padding (pridėti 0x80 baitą ir užpildyti iki artimiausio bloko, gale įdėti įvesties ilgį), kad blokai būtų vienodo dydžio.
+4. Įvestį padalinti į 64 baitų blokus. Kiekvieną bloką paversti į 64-bit žodžius.
+5. Būseną (state) atnaujinti panaudojant XOR tarp pradinės būsenos ir žodžių.
+6. Kiekvieną bloką apdoroti permute funkcija: rotacijos, XOR’ai ir daugybos su didelėmis konstantomis, kad visi bitai kuo labiau susimaišytų.
+7. Užbaigti su finalizacija, dar kartą pakaitalioti būseną XOR ir permute funkcijomis, kad net trumpi/panašūs įėjimai duotų visiškai skirtingą rezultatą.
+8. Grąžinti keturis 64-bit sveikus skaičius kaip vieną 256-bit maišą (atvaizduojamą kaip 64 simbolių šešioliktainį stringą).
+
 ##  AI Versijos Pseudo-kodas
 function custom_hash256(input_string):
     
